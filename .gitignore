@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.venv/
+venv/
+models/
+*.joblib
+.DS_Store
+
+# Office temp/lock files
+~$*

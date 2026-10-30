@@ -1,0 +1,23 @@
+# Local orchestration: run training once, then serve the resulting model.
+services:
+  train:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.train
+    volumes:
+      - model-store:/app/models
+
+  serve:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.serve
+    ports:
+      - "8000:8000"
+    volumes:
+      - model-store:/app/models
+    depends_on:
+      train:
+        condition: service_completed_successfully
+
+volumes:
+  model-store:

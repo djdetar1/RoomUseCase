@@ -1,0 +1,18 @@
+# Runs the training pipeline and writes the model to /app/models.
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PYTHONPATH=/app/src
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY src/ ./src/
+COPY data/ ./data/
+
+VOLUME ["/app/models"]
+
+ENTRYPOINT ["python", "-m", "occupancy.train"]
